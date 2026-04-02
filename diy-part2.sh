@@ -18,3 +18,17 @@
 
 # Modify hostname
 #sed -i 's/OpenWrt/P3TERX-Router/g' package/base-files/files/bin/config_generate
+# Add Passwall2
+git clone https://github.com/xiaorouji/openwrt-passwall2 package/passwall2
+
+# Add OpenClash
+git clone https://github.com/vernesong/OpenClash package/openclash
+
+# Add MosDNS
+git clone https://github.com/sbwml/luci-app-mosdns package/mosdns
+
+# Add SmartDNS
+git clone https://github.com/pymumu/luci-app-smartdns package/smartdns
+
+# Argon Theme
+git clone https://github.com/jerrykuku/luci-theme-argon package/argon
