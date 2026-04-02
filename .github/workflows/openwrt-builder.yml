@@ -1,10 +1,8 @@
 name: Build OpenWrt Firmware
-
-# 手动触发 & 每周自动编译
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 3 * * 6' # 每周六 3:00 自动编译
+    - cron: '0 3 * * 6'
 
 jobs:
   build:
@@ -20,15 +18,12 @@ jobs:
 
       - name: Clone OpenWrt Source
         run: |
-          # 克隆主源码（这里使用 ImmortalWrt 源码，稳定性高，带新版LuCI）
           git clone https://github.com/immortalwrt/immortalwrt.git openwrt
           cd openwrt
-          # 可指定版本，例如: git checkout origin/openwrt-23.05 -b local
 
-      - name: Execute DIY Part 1 (Feeds Config)
+      - name: Execute DIY Part 1
         run: |
           cd openwrt
-          # 执行上级目录的脚本，修改软件源
           bash ../diy-part1.sh
 
       - name: Update & Install Feeds
@@ -37,16 +32,14 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Execute DIY Part 2 (Plugin Pull)
+      - name: Execute DIY Part 2
         run: |
           cd openwrt
-          # 执行上级目录的脚本，拉取插件
           bash ../diy-part2.sh
 
       - name: Load Configuration
         run: |
           cd openwrt
-          # 复制根目录的 .config 文件进来
           cp ../.config .config
           make defconfig
 
