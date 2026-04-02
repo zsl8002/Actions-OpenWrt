@@ -20,10 +20,31 @@
 #sed -i 's/OpenWrt/P3TERX-Router/g' package/base-files/files/bin/config_generate
 # Add Passwall2
 #!/bin/bash
-# 拉取必要插件
-git clone https://github.com/xiaorouji/openwrt-passwall2 package/passwall2
-git clone https://github.com/vernesong/OpenClash package/openclash
-git clone https://github.com/sbwml/luci-app-mosdns package/mosdns
-git clone https://github.com/pymumu/luci-app-smartdns package/smartdns
-git clone https://github.com/rufengsuixing/luci-app-adguardhome package/adguardhome
-git clone https://github.com/jerrykuku/luci-theme-argon package/argon
+# 这里是 diy-part2.sh：在 package/ 目录下拉取插件
+
+# 定义插件目录
+PKG_DIR="package/community"
+
+# 创建目录
+mkdir -p $PKG_DIR
+
+# 1. OpenClash (预编译版更稳)
+git clone --depth 1 https://github.com/vernesong/OpenClash.git $PKG_DIR/openclash
+
+# 2. Passwall2 (全能科学上网)
+git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall2.git $PKG_DIR/passwall2
+
+# 3. MosDNS + SmartDNS (广告拦截与DNS加速)
+git clone --depth 1 https://github.com/sbwml/luci-app-mosdns.git $PKG_DIR/mosdns
+git clone --depth 1 https://github.com/pymumu/luci-app-smartdns.git $PKG_DIR/smartdns
+
+# 4. AdGuard Home (广告拦截)
+git clone --depth 1 https://github.com/rufengsuixing/luci-app-adguardhome.git $PKG_DIR/adguardhome
+
+# 5. Argon 主题
+git clone --depth 1 https://github.com/jerrykuku/luci-theme-argon.git $PKG_DIR/argon
+git clone --depth 1 https://github.com/jerrykuku/luci-app-argon-config.git $PKG_DIR/argon-config
+
+# 清理缓存
+rm -rf tmp/
+exit 0
