@@ -14,7 +14,17 @@
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
 # Add a feed source
-echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
-#echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
-sed -i 's|https://git.openwrt.org/feed/packages.git|https://github.com/immortalwrt/packages|g' feeds.conf.default
-sed -i 's|https://git.openwrt.org/project/luci.git|https://github.com/immortalwrt/luci|g' feeds.conf.default
+#!/bin/bash
+# 这里是 diy-part1.sh：修改 feeds.conf.default
+
+# 替换默认的 LuCI 源为 ImmortalWrt 最新版
+sed -i 's/^#\(.*luci\)/\1/' feeds.conf.default
+sed -i 's|https://github.com/openwrt/luci.git|https://github.com/immortalwrt/luci.git|g' feeds.conf.default
+
+# 替换 packages 源为 ImmortalWrt 源（解决依赖问题）
+sed -i 's|https://github.com/openwrt/packages.git|https://github.com/immortalwrt/packages.git|g' feeds.conf.default
+
+# 如果需要添加其他 feeds，例如 helloworld 备用源
+# echo "src-git helloworld https://github.com/fw876/helloworld.git" >> feeds.conf.default
+
+exit 0
